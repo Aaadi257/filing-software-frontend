@@ -1,0 +1,33 @@
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.success-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.ref-code {
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 1.1em;
+    color: var(--primary-color);
+    background: white;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    border: 1px solid #bbf7d0;
+}
+
+.table-container {
+    overflow-x: auto;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+}
+
+.font-mono {
+    font-family: monospace;
+    font-weight: 500;
+}

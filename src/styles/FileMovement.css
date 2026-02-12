@@ -1,0 +1,65 @@
+.content-grid-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.selected-file-badge {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.list-search {
+    width: 250px;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.status-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-badge.moved {
+    background-color: #fff7ed;
+    color: #c2410c;
+    border: 1px solid #ffedd5;
+}
+
+.status-badge.received {
+    background-color: #f0fdf4;
+    color: #15803d;
+    border: 1px solid #bbf7d0;
+}
+
+.btn-sm {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    border-radius: var(--radius-sm);
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.btn-receive {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.btn-receive:hover {
+    background-color: #059669;
+}
