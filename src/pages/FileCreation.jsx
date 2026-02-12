@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api';
-import { Save, FileText, CheckCircle } from 'lucide-react';
+import { Save, FileText, CheckCircle, Trash2 } from 'lucide-react';
 import '../styles/FileCreation.css';
 
 const FileCreation = () => {
@@ -80,6 +80,19 @@ const FileCreation = () => {
             setLoading(false);
         }
     };
+
+    const handleDeleteFile = async (fileId) => {
+        if (!window.confirm('Are you sure you want to delete this file?')) {
+            return;
+        }
+        try {
+            await api.delete(`/files/${fileId}`);
+            fetchFiles();
+        } catch (err) {
+            console.error('Failed to delete file', err);
+        }
+    };
+
 
     return (
         <div className="file-creation-page fade-in">
@@ -201,11 +214,12 @@ const FileCreation = () => {
                                     <th>Company</th>
                                     <th>Rack</th>
                                     <th>Category</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {files.length === 0 ? (
-                                    <tr><td colSpan="5">No files created yet.</td></tr>
+                                    <tr><td colSpan="6">No files created yet.</td></tr>
                                 ) : (
                                     files.slice().reverse().map(file => (
                                         <tr key={file.id}>
@@ -214,6 +228,15 @@ const FileCreation = () => {
                                             <td>{file.company.name}</td>
                                             <td>{file.rack.code}</td>
                                             <td>{file.category.name}</td>
+                                            <td>
+                                                <button
+                                                    className="btn-icon btn-delete"
+                                                    onClick={() => handleDeleteFile(file.id)}
+                                                    title="Delete"
+                                                >
+                                                    <Trash2 size={16} />
+                                                </button>
+                                            </td>
                                         </tr>
                                     ))
                                 )}

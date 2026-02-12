@@ -90,6 +90,23 @@ const Masters = () => {
         }
     };
 
+    const handleDelete = async (id) => {
+        if (!window.confirm(`Are you sure you want to delete this ${activeTab}?`)) {
+            return;
+        }
+        try {
+            const endpoint = activeTab === 'company' ? `/masters/companies/${id}` :
+                activeTab === 'rack' ? `/masters/racks/${id}` :
+                    `/masters/categories/${id}`;
+            await api.delete(endpoint);
+            setSuccess(`${activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} deleted successfully!`);
+            fetchMasters();
+        } catch (err) {
+            setError(`Failed to delete ${activeTab}.`);
+        }
+    };
+
+
     return (
         <div className="masters-page fade-in">
             <div className="page-header">
@@ -168,17 +185,27 @@ const Masters = () => {
                                     <th>ID</th>
                                     {activeTab !== 'rack' && <th>Name</th>}
                                     {(activeTab === 'rack' || activeTab === 'category') && <th>Code</th>}
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {data.length === 0 ? (
-                                    <tr><td colSpan="3">No records found.</td></tr>
+                                    <tr><td colSpan="4">No records found.</td></tr>
                                 ) : (
                                     data.map((item) => (
                                         <tr key={item.id}>
                                             <td>#{item.id}</td>
                                             {activeTab !== 'rack' && <td>{item.name}</td>}
                                             {(activeTab === 'rack' || activeTab === 'category') && <td>{item.code}</td>}
+                                            <td>
+                                                <button
+                                                    className="btn-icon btn-delete"
+                                                    onClick={() => handleDelete(item.id)}
+                                                    title="Delete"
+                                                >
+                                                    <Trash2 size={16} />
+                                                </button>
+                                            </td>
                                         </tr>
                                     ))
                                 )}

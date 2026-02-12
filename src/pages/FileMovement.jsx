@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api';
 import SearchBar from '../components/SearchBar';
-import { ArrowRight, Check, History } from 'lucide-react';
+import { ArrowRight, Check, History, Trash2 } from 'lucide-react';
 import '../styles/FileMovement.css';
 
 const FileMovement = () => {
@@ -81,6 +81,19 @@ const FileMovement = () => {
             console.error("Failed to update status", err);
         }
     };
+
+    const handleDeleteMovement = async (movementId) => {
+        if (!window.confirm('Are you sure you want to delete this movement record?')) {
+            return;
+        }
+        try {
+            await api.delete(`/movements/${movementId}`);
+            fetchMovements();
+        } catch (err) {
+            console.error('Failed to delete movement', err);
+        }
+    };
+
 
     // Filter movements for the list
     const filteredMovements = movements.filter(m =>
@@ -211,6 +224,14 @@ const FileMovement = () => {
                                                         Mark Received
                                                     </button>
                                                 )}
+                                                <button
+                                                    className="btn-icon btn-delete"
+                                                    onClick={() => handleDeleteMovement(m.id)}
+                                                    title="Delete"
+                                                    style={{ marginLeft: '0.5rem' }}
+                                                >
+                                                    <Trash2 size={16} />
+                                                </button>
                                             </td>
                                         </tr>
                                     ))
